@@ -1,0 +1,36 @@
+.login{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: center/cover no-repeat url('../../assets/images/login/login-background.jpg');
+  .login-container{
+    width: 500px;
+    height: 360px;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(255,255,255,.2);
+    box-shadow: 0 0 2px #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .login-text{
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 40px;
+  }
+  .login-form{
+    width: 100%;
+    padding-right: 100px;
+  }
+  .login-captcha{
+    width: 100px;
+    height: 32px;
+    cursor: pointer;
+  }
+}

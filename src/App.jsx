@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react'
 // 导入路由及react-redux钩子
-import { useNavigate, useRoutes } from 'react-router-dom'
+import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 // 导入api
 import { getUserInfoAsync } from './store/reducers/userSlice'
@@ -15,14 +15,14 @@ export default function App() {
   const routes = useSelector((state) => state.permission.routes)
   // 跳转方法
   const navigate = useNavigate()
-
+  const location = useLocation()
   useEffect(() => {
     const fetchData = async () => {
       if (getToken()) {
         const userInfo = await dispatch(getUserInfoAsync())
         dispatch(generateRoutes(userInfo.menus))
       } else {
-        navigate('/login', { replace: true })
+        navigate('/login', { replace: true, state: { preLocation: location } })
       }
     }
     fetchData()

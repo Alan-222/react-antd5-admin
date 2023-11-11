@@ -17,6 +17,7 @@ import './Layout.scss'
 // 导入自定义组件
 import CustomModal from '@/components/CustomModal'
 import UserCenterForm from './components/UserCenterForm'
+import ResetPwdForm from './components/ResetPwdForm'
 import SvgIcon from '@/components/SvgIcon'
 // 导入工具类方法
 import { getItem, getTreeMenu } from '@/utils/common'
@@ -178,6 +179,9 @@ const LayoutApp = () => {
       </Layout>
       <CustomModal title="个人中心" ref={userCenterRef}>
         <UserCenterForm toggleCenterStatus={toggleCenterStatus} />
+      </CustomModal>
+      <CustomModal title="重置密码" ref={resetPwdRef}>
+        <ResetPwdForm toggleResetStatus={toggleResetStatus} />
       </CustomModal>
     </Layout>
   )

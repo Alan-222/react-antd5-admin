@@ -48,7 +48,7 @@ const Login = () => {
       setLoading(false)
       // 若上次为登录页，跳转到首页
       if (from === '/login') navigate('/', { replace: true })
-      navigate(from, { replace: true })
+      else navigate(from, { replace: true })
       message.success('登录成功！')
     } catch (e) {
       console.error(e)

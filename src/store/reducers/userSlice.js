@@ -20,7 +20,7 @@ const userSlice = createSlice({
     return {
       token,
       refreshToken,
-      userinfo: { username: 'Alan' }
+      userinfo: null
     }
   },
   // 状态操作方法
@@ -39,7 +39,7 @@ const userSlice = createSlice({
     logout(state, action) {
       state.token = null
       state.refreshToken = null
-      state.userinfo = null
+      state.userinfo = { avatar: null }
       // 移除存储中的信息
       removeToken()
       removeRefreshToken()

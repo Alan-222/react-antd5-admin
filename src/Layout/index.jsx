@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,13 +11,15 @@ import {
 import { Layout, Menu, Button, theme, Switch, Dropdown, Space, Popconfirm } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/store/reducers/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link, Outlet, useLocation } from 'react-router-dom'
 // 导入css（未模块化）
 import './Layout.scss'
 // 导入自定义组件
 import CustomModal from '@/components/CustomModal'
 import UserCenterForm from './components/UserCenterForm'
-import ResetPwdForm from './components/ResetPwdForm'
+import SvgIcon from '@/components/SvgIcon'
+// 导入工具类方法
+import { getItem, getTreeMenu } from '@/utils/common'
 const { Header, Sider, Content } = Layout
 
 const LayoutApp = () => {
@@ -34,6 +36,24 @@ const LayoutApp = () => {
   // 切换侧边栏主题颜色
   const changeTheme = (value) => {
     setThemeVari(value ? 'light' : 'dark')
+  }
+  /** 侧边栏菜单 */
+  const { pathname } = useLocation()
+  const permissionRoutes = useSelector((state) => state.permission.permissionRoutes)
+  // 获取当前路径数组片段
+  const pathSnippets = pathname.split('/').filter((i) => i)
+  const [subMenuKeys, setSubMenuKeys] = useState(pathSnippets.slice(0, -1).map((item) => '/' + item))
+  const menuItems = useMemo(() => {
+    return [
+      getItem(
+        <Link to="/home">首页</Link>,
+        '/home',
+        <SvgIcon name="component" width="14" height="14" color="#ccc"></SvgIcon>
+      )
+    ].concat(getTreeMenu(permissionRoutes, themeVari))
+  }, [permissionRoutes, themeVari])
+  const handleMenuClick = (menuitem) => {
+    navigate(menuitem.key)
   }
   // 用户头像
   const avatar = useSelector((state) => state.user.userinfo.avatar)
@@ -102,7 +122,17 @@ const LayoutApp = () => {
           onChange={changeTheme}
           style={{ transform: collapsed ? 'translateX(15px)' : 'translateX(75px)' }}
         />
-        <Menu theme={themeVari} mode="inline" defaultSelectedKeys={[]} items={[]} />
+        <Menu
+          theme={themeVari}
+          mode="inline"
+          selectedKeys={[pathname]}
+          openKeys={subMenuKeys}
+          onOpenChange={(openKeys) => {
+            setSubMenuKeys(openKeys)
+          }}
+          items={menuItems}
+          onClick={handleMenuClick}
+        />
       </Sider>
       <Layout>
         <Header
@@ -143,14 +173,11 @@ const LayoutApp = () => {
             minHeight: 280,
             background: colorBgContainer
           }}>
-          Content
+          <Outlet />
         </Content>
       </Layout>
       <CustomModal title="个人中心" ref={userCenterRef}>
         <UserCenterForm toggleCenterStatus={toggleCenterStatus} />
-      </CustomModal>
-      <CustomModal title="重置密码" ref={resetPwdRef}>
-        <ResetPwdForm toggleResetStatus={toggleResetStatus} />
       </CustomModal>
     </Layout>
   )

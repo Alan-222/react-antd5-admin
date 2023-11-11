@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.scss'
+// 全局导入svg图标
+import '@/assets/Icon'
 // 导入redux相关库及文件
 import store from './store'
 import { Provider } from 'react-redux'

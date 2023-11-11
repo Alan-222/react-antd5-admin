@@ -13,6 +13,7 @@ function filterAsyncRoutes(routes) {
     const Component = lazy(() => import(`@/pages${route.component}`))
     const tmp = {
       path: route.path,
+      menuPath: route?.menuPath,
       // 若为Layout则直接用父路由的Layout结构，否则用src/pages目录去拼接
       element: route.component === 'Layout' ? null : <Component />,
       redirect: route.redirect || undefined,

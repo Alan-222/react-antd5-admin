@@ -1,0 +1,17 @@
+.iconSelect{
+  width: 200px;
+  padding: 10px;
+  .iconSelect-list{
+    height: 200px;
+    margin-top: 10px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-row-gap:10px;
+    cursor: pointer;
+  }
+  .iconSelect-item{
+    width:20px;
+    height:20px;
+  }
+}

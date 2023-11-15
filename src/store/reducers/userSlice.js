@@ -20,7 +20,7 @@ const userSlice = createSlice({
     return {
       token,
       refreshToken,
-      userinfo: null
+      userinfo: { avatar: null }
     }
   },
   // 状态操作方法

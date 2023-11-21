@@ -15,14 +15,14 @@ const SearchBar = ({ formItemList, getSearchParams }) => {
   }
   // 表单输入式组件
   const formComponents = {
-    select: ({ selectValues = [], callback = () => {}, ...restProps }) =>
+    select: ({ type, selectvalues = [], callback = () => {}, ...restProps }) =>
       createElement(
         Select,
         { onChange: (v) => callback(v), ...restProps },
-        selectValues.map((v) => createElement(Select.Option, { key: v.value, value: v.value }, v.label))
+        selectvalues.map((v) => createElement(Select.Option, { key: v.value, value: v.value }, v.label))
       ),
-    input: (props) => <Input {...props} />,
-    datePicker: (props) => <DatePicker format="YYYY-MM-DD" {...props} />
+    input: ({ type, ...restProps }) => <Input {...restProps} />,
+    datePicker: ({ type, ...restProps }) => <DatePicker format="YYYY-MM-DD" {...restProps} />
   }
   return (
     <Card>
@@ -73,7 +73,6 @@ const SearchBar = ({ formItemList, getSearchParams }) => {
             formItemList.slice(3).map((item, index) => {
               const { type = 'input' } = item.valueCompProps
               const C = formComponents[type]
-              delete item.valueCompProps.type
               return (
                 <Col span={6} key={3 + index}>
                   <Form.Item {...item.formItemProps}>{C(item.valueCompProps)}</Form.Item>

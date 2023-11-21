@@ -11,16 +11,17 @@ const useFetchTableData = (fetchMethod, params, onParamChange) => {
         data: { count, rows }
       } = await fetchMethod({
         currentPage: params.current,
-        ...params
+        ...params,
+        current: undefined
       })
 
       setTableData({
         tableData: rows,
         total: count
       })
-      // 如果删除页面最后一个元素且不是第一页，当前页数减去1
+      // 如果删除页面最后一个元素且不是第一页，重置请求参数，且当前页数减去1
       if (!rows.length && params.current !== 1) {
-        onParamChange((params) => ({ current: params.current - 1 }))
+        onParamChange({ pageSize: 5, current: params.current - 1 })
       }
     } finally {
       setLoading(false)

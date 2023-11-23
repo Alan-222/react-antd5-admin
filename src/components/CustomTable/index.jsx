@@ -3,7 +3,6 @@ import { Table } from 'antd'
 // 导入自定义hook
 import useFetchTableData from '@/hooks/useFetchTableData'
 const CustomTable = ({ fetchMethod, columns, requestParam, onParamChange, ...resetTableProps }) => {
-  console.log(requestParam)
   // 请求表格数据
   const { loading, tableData } = useFetchTableData(fetchMethod, requestParam, onParamChange)
 

@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { Input, Tooltip } from 'antd'
-import { getNameList } from './index'
+import { getNameList } from '@/assets/Icon'
 import SvgIcon from '@/components/SvgIcon'
 import './IconSelect.scss'
 
 export default function IconSelect(props) {
-  // const [iconName, setIconName] = useState()
   const [iconList, setIconList] = useState(getNameList())
+  // 搜索图标
   const filterIcons = (iconName) => {
     setIconList(getNameList())
     if (iconName) {
       setIconList(getNameList().filter((item) => item.indexOf(iconName) !== -1))
     }
   }
-
+  // 点击选择图标
   const selectedIcon = (name) => {
     props.selected(name)
   }

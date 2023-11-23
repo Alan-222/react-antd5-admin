@@ -10,7 +10,7 @@ const apiMap = {
     queryAll: allRole // 获取所有
   },
   // 角色资源获取
-  resourse: {
+  resource: {
     getRes: getRoleResources,
     updRes: updateRoleResource
   }

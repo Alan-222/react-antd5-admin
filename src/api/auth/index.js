@@ -12,7 +12,7 @@ const apiMap = {
   // 权限选项
   options: {
     getMenus: listMenuOptions,
-    getBtns: listBtnOptions
+    getAuth: listAuthOptions
   }
 }
 export default apiMap
@@ -33,7 +33,7 @@ function listMenuOptions() {
   })
 }
 // 获取权限列表（包含菜单及按钮）
-function listBtnOptions() {
+function listAuthOptions() {
   return request({
     url: '/user/menu/listAuthOptions',
     method: 'get'

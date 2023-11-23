@@ -10,7 +10,7 @@ const importAll = (r) => {
 }
 const iconList = importAll(require.context('@/assets/Icon/svg', false, /\.svg$/))
 
-// 获取图标为icon-(*).svg名称数组, 例如[icon-shouye, icon-xitong, icon-zhedie, ...]
+// 获取图标为icon-(*).svg名称数组, 例如[shouye, xitong, hedie, ...]
 export const getNameList = () => {
   const regex = /icon-(.*?)\.svg/
   return iconList.map((item) => item.match(regex)[1])

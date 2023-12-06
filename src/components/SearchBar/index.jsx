@@ -1,16 +1,17 @@
-import React, { createElement, useState } from 'react'
+import React, { createElement, useId, useState } from 'react'
 import { Card, Form, Button, Input, Space, Select, Row, Col, DatePicker } from 'antd'
 import { PlusCircleOutlined } from '@ant-design/icons'
 
-const SearchBar = ({ formItemList, getSearchParams }) => {
+const SearchBar = ({ name, formItemList, getSearchParams }) => {
   // form 表单实例
-  const [form] = Form.useForm()
+  const [searchForm] = Form.useForm()
   const [advancedSearch, setAdvancedSearch] = useState(false)
+  const uniqueId = useId()
   const onFinish = (values) => {
     getSearchParams(values)
   }
   const onReset = () => {
-    form.resetFields()
+    searchForm.resetFields()
     getSearchParams({})
   }
   // 表单输入式组件
@@ -27,8 +28,8 @@ const SearchBar = ({ formItemList, getSearchParams }) => {
   return (
     <Card>
       <Form
-        form={form}
-        name="queryForm"
+        form={searchForm}
+        name={uniqueId + 'queryForm'}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
         layout="inline"

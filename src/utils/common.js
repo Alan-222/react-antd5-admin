@@ -5,31 +5,31 @@
 // 导入图标组件
 import SvgIcon from '@/components/SvgIcon'
 /**
- * 获取面包屑平铺对象 , 例:{"/home":"首页"}
+ * 面包屑获取路由平铺对象 ,
  * @param {*} routes
- * @returns
+ * @returns object, 例:{"/home":"首页"}
  */
 export const getBreadcrumbNameMap = (routes) => {
-  //首先进行深拷贝
-  let list = JSON.parse(JSON.stringify(routes))
-  list = [{ path: 'home', redirect: '/home', title: '首页' }, ...list]
-  let newObj = {}
+  //首先拼接上首页
+  const list = [{ path: 'home', menuPath: '/home', title: '首页' }, ...routes]
+  let breadcrumbNameObj = {}
   const getItems = (list) => {
     //先遍历数组
     list.forEach((item) => {
       //遍历数组项的对象
       if (item.children && item.children.length) {
-        newObj[item.redirect] = item.title
+        const menuPath = item.menuPath ? item.menuPath : '/' + item.path
+        breadcrumbNameObj[menuPath] = item.title
         getItems(item.children)
       } else {
-        newObj[item.redirect] = item.title
+        breadcrumbNameObj[item.menuPath] = item.title
       }
     })
   }
   //调用一下递归函数
   getItems(list)
   //返回新数组
-  return newObj
+  return breadcrumbNameObj
 }
 
 /** 获取菜单项 */

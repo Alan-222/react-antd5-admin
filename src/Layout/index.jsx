@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useCallback, Suspense } from 'react'
+import React, { useState, useRef, useMemo, useCallback, Suspense, lazy } from 'react'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,7 +11,7 @@ import {
 import { Layout, Menu, Button, theme, Switch, Dropdown, Space, Popconfirm, Breadcrumb } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/store/reducers/userSlice'
-import { useNavigate, Link, Outlet, useLocation } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 // 导入css（未模块化）
 import './Layout.scss'
 // 导入自定义组件
@@ -22,8 +22,7 @@ import ResetPwdForm from './components/ResetPwdForm'
 import SvgIcon from '@/components/SvgIcon'
 // 导入工具类方法
 import { getBreadcrumbNameMap, getItem, getTreeMenu } from '@/utils/common'
-import KeepAlive from 'react-activation'
-import Loading from '@/components/Loading'
+
 const { Header, Sider, Content } = Layout
 // 提取底层路由方法
 const getMenus = (routes) => {
@@ -96,7 +95,6 @@ const LayoutApp = () => {
     }
   })
   /** tabs栏 */
-  const tabs = useSelector((state) => state.tabs.tabs)
   // 选择选项卡以后，跳转对应路由
   const selectTab = useCallback(
     (key) => {
@@ -105,8 +103,9 @@ const LayoutApp = () => {
     [navigate]
   )
   // 格式化路由数组
+  const Home = lazy(() => import('@/pages/Home'))
   const formatRoutes = useMemo(() => {
-    return [{ title: '首页', menuPath: '/home' }].concat(getMenus(permissionRoutes))
+    return [{ title: '首页', menuPath: '/home', element: <Home /> }].concat(getMenus(permissionRoutes))
   }, [permissionRoutes])
   // 用户头像
   const avatar = useSelector((state) => state.user.userinfo.avatar)
@@ -225,19 +224,6 @@ const LayoutApp = () => {
             // background: colorBgContainer
           }}>
           <TabsView pathname={pathname} formatRoutes={formatRoutes} selectTab={selectTab} />
-          {/* 显示layout子路由视图 */}
-          {/* <Outlet /> */}
-          <div style={{ padding: '24px' }}>
-            {tabs.find((item) => item.key === pathname) ? (
-              <KeepAlive id={pathname} cacheKey={pathname}>
-                <Suspense fallback={<Loading />}>
-                  <Outlet />
-                </Suspense>
-              </KeepAlive>
-            ) : (
-              <Outlet />
-            )}
-          </div>
         </Content>
       </Layout>
       <CustomModal title="个人中心" ref={userCenterRef}>

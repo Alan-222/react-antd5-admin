@@ -35,7 +35,14 @@ const TabsView = React.memo(({ pathname, formatRoutes, selectTab }) => {
   const onAddTab = (pathname) => {
     // 找到对应路径的菜单信息
     const menu = formatRoutes.find((item) => item.menuPath === pathname)
-    if (menu) dispatch(addTab({ label: menu.title, key: menu.menuPath }))
+    if (menu)
+      dispatch(
+        addTab({
+          label: menu.title,
+          key: menu.menuPath,
+          children: <div style={{ padding: 24, backgroundColor: '#f5f5f5' }}>{menu.element}</div>
+        })
+      )
   }
   // 点击选项卡关闭
   const closeTab = (targetKey) => {

@@ -18,7 +18,7 @@ const Login = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const from = location.state?.preLocation?.pathname || '/'
+  const from = location.state?.preLocation?.pathname || '/home'
   /** 登录表单参数与方法 */
   // 获取antd的form实例
   const [form] = Form.useForm()
@@ -47,7 +47,7 @@ const Login = () => {
       await dispatch(loginAsync({ ...values, uuid }))
       setLoading(false)
       // 若上次为登录页，跳转到首页
-      if (from === '/login') navigate('/', { replace: true })
+      if (from === '/login') navigate('/home', { replace: true })
       else navigate(from, { replace: true })
       message.success('登录成功！')
     } catch (e) {

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Tabs, ConfigProvider } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTab, removeTab } from '@/store/reducers/tabSlice'
+import { Outlet } from 'react-router-dom'
 
 const TabsView = React.memo(({ pathname, formatRoutes, selectTab }) => {
   // 获取全局tabs
@@ -23,6 +24,11 @@ const TabsView = React.memo(({ pathname, formatRoutes, selectTab }) => {
   const tabItems = useMemo(() => {
     return tabs.map((item) => ({
       ...item,
+      children: (
+        <div style={{ padding: 24, backgroundColor: '#f5f5f5' }}>
+          <Outlet />
+        </div>
+      ),
       closable: tabs.length > 1
     }))
   }, [tabs])
@@ -39,8 +45,7 @@ const TabsView = React.memo(({ pathname, formatRoutes, selectTab }) => {
       dispatch(
         addTab({
           label: menu.title,
-          key: menu.menuPath,
-          children: <div style={{ padding: 24, backgroundColor: '#f5f5f5' }}>{menu.element}</div>
+          key: menu.menuPath
         })
       )
   }

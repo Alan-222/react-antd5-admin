@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useCallback, Suspense, lazy } from 'react'
+import React, { useState, useRef, useMemo, useCallback, lazy } from 'react'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,6 +11,7 @@ import {
 import { Layout, Menu, Button, theme, Switch, Dropdown, Space, Popconfirm, Breadcrumb } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/store/reducers/userSlice'
+import { clearTab } from '@/store/reducers/tabSlice'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 // 导入css（未模块化）
 import './Layout.scss'
@@ -155,6 +156,7 @@ const LayoutApp = () => {
   // 退出登录
   const handleLogout = () => {
     dispatch(logout())
+    dispatch(clearTab())
     navigate('/login')
   }
   // debugger

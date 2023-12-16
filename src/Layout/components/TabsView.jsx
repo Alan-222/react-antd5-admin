@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Tabs, ConfigProvider } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTab, removeTab } from '@/store/reducers/tabSlice'
-import { Outlet } from 'react-router-dom'
 
 const TabsView = React.memo(({ pathname, formatRoutes, selectTab }) => {
   // 获取全局tabs
@@ -25,13 +24,15 @@ const TabsView = React.memo(({ pathname, formatRoutes, selectTab }) => {
     return tabs.map((item) => ({
       ...item,
       children: (
-        <div style={{ padding: 24, backgroundColor: '#f5f5f5' }}>
-          <Outlet />
+        <div style={{ padding: 24, backgroundColor: '#f5f5f5' }} key={item.key}>
+          {/* {formatRoutes.find((menu) => menu.menuPath === item.key)?.element}
+           */}
+          {item.children}
         </div>
       ),
       closable: tabs.length > 1
     }))
-  }, [tabs])
+  }, [tabs, formatRoutes])
   /** tab操作方法 */
   // tab切换事件
   const handleTabChange = (activeKey) => {
@@ -45,7 +46,8 @@ const TabsView = React.memo(({ pathname, formatRoutes, selectTab }) => {
       dispatch(
         addTab({
           label: menu.title,
-          key: menu.menuPath
+          key: menu.menuPath,
+          children: menu.element
         })
       )
   }

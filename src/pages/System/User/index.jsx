@@ -145,10 +145,14 @@ const User = () => {
   }
   // 删除
   const deleteRow = async (user_ids) => {
-    await userApi.manage.del({ user_ids: user_ids })
-    message.success('删除成功')
-    // 重新请求表格
-    onParamChange({})
+    try {
+      await userApi.manage.del({user_ids: user_ids})
+      message.success('删除成功')
+      // 重新请求表格
+      onParamChange({})
+    }catch (e) {
+      message.error(e)
+    }
   }
   // 重置密码
   const resetPwd = (user_id) => {

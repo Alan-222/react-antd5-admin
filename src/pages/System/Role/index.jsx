@@ -128,10 +128,14 @@ const Role = () => {
     toggleModalStatus(true)
   }
   const deleteRow = async (role_ids) => {
-    await roleApi.manage.del({ role_ids })
-    message.success('删除成功')
-    // 重新请求表格
-    onParamChange({})
+    try {
+      await roleApi.manage.del({ role_ids })
+      message.success('删除成功')
+      // 重新请求表格
+      onParamChange({})
+    }catch (e) {
+      message.error(e)
+    }
   }
   const assignRoleAuth = async (role_id) => {
     // 获取该角色id的权限数据

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Table, Space, Card, Tag, Popconfirm } from 'antd'
+import {Table, Space, Card, Tag, Popconfirm, message} from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 // 导入api
 import authApi from '@/api/auth'
@@ -148,8 +148,12 @@ const Auth = () => {
     toggleModalStatus(true)
   }
   const deleteRow = async (menu_id) => {
-    await authApi.manage.del({ menu_id })
-    fetchData()
+    try {
+      await authApi.manage.del({ menu_id })
+      fetchData()
+    }catch (e) {
+      message.error(e)
+    }
   }
   const fetchData = async () => {
     setLoading(true)

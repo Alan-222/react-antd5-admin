@@ -136,7 +136,7 @@ const Login = () => {
             <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
               <Checkbox>记住密码</Checkbox>
             </Form.Item>
-
+            <p className={classes['login-tip']}>测试登录账号：Alan，密码：123456</p>
             <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button type="primary" htmlType="submit" loading={loading}>
                 登录
